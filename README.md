@@ -43,7 +43,7 @@ curl "http://localhost:8081/api/ai/chat?memoryId=1&message=Java%E5%AD%A6%E4%B9%A
 启动前端（可选）：
 
 ```bash
-cd ai-code-helper-frontend
+cd code-mentor-frontend
 npm install
 npm run dev
 ```
