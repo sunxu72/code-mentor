@@ -15,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,11 +39,16 @@ public class RagConfig {
         return new InMemoryEmbeddingStore<>();
     }
 
+    /** RAG 文档目录；空目录不会被 git 跟踪，所以目录可能不存在，需要容错 */
+    private static final String DOCS_DIR = "src/main/resources/docs";
+
     @Bean
     public ContentRetriever contentRetriever(EmbeddingStore<TextSegment> embeddingStore) {
         // ------ RAG ------
-        // 1. 加载文档
-        List<Document> documents = FileSystemDocumentLoader.loadDocuments("src/main/resources/docs");
+        // 1. 加载文档：目录不存在时跳过，避免 clone 下来直接启动失败
+        List<Document> documents = Files.isDirectory(Path.of(DOCS_DIR))
+                ? FileSystemDocumentLoader.loadDocuments(DOCS_DIR)
+                : Collections.emptyList();
         // 2. 文档切割：将每个文档按每段进行分割，最大 1000 字符，每次重叠最多 200 个字符
         DocumentByParagraphSplitter paragraphSplitter = new DocumentByParagraphSplitter(1000, 200);
         // 3. 自定义文档加载器
