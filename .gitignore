@@ -1,0 +1,20 @@
+HELP.md
+target/
+out/
+
+### 本地环境与密钥 ###
+.env
+*.log
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### 前端 ###
+node_modules/
+dist/
