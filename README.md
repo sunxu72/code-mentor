@@ -12,7 +12,7 @@
 - **工具调用**：`@Tool` 封装面试题检索，模型按需自主调用
 - **MCP 联网搜索**：接入智谱 BigModel 的 MCP 服务，条件装配、可随时关闭
 - **输入护栏**：`InputGuardrail` 在调用模型前拦截敏感输入，避免无效请求消耗 token
-- **流式输出**：`Flux<ServerSentEvent<String>>`，前端逐字渲染
+- **流式输出**：`Flux` + `ServerSentEvent`，后端逐段推送、前端逐字渲染
 - **结构化输出**：`record Report` 直接映射成学习报告对象
 - **可观测**：`ChatModelListener` 统一记录请求 / 响应 / 异常
 
